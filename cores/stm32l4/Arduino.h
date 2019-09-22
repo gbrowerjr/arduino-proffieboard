@@ -117,9 +117,16 @@ void loop( void ) ;
 #undef abs
 #endif // abs
 
+#ifdef __cplusplus
+template<typename X, typename Y> static inline X min(X x, Y y) { return x < y ? x : y; }
+template<typename X, typename Y> static inline X max(X x, Y y) { return x < y ? x : y; }
+template<typename X> static inline X abs(X x) { return x > 0 ? (x) : -(x); }
+#else
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
 #define abs(x) ((x)>0?(x):-(x))
+#endif
+
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 #define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
 #define radians(deg) ((deg)*DEG_TO_RAD)
