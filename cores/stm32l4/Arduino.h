@@ -118,9 +118,12 @@ void loop( void ) ;
 #endif // abs
 
 #ifdef __cplusplus
+#include <cmath>
 template<typename X, typename Y> static inline X min(X x, Y y) { return x < y ? x : y; }
 template<typename X, typename Y> static inline X max(X x, Y y) { return x < y ? x : y; }
-template<typename X> static inline X abs(X x) { return x > 0 ? (x) : -(x); }
+using std::abs;
+using std::isnan;
+using std::isinf;
 #else
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
