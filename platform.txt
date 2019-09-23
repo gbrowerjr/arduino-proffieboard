@@ -38,7 +38,7 @@ compiler.S.cmd=arm-none-eabi-gcc
 compiler.S.flags=-c -g -x assembler-with-cpp
 compiler.cpp.cmd=arm-none-eabi-g++
 compiler.cpp.flags=-mcpu={build.mcu} -mthumb -c -g {build.flags.optimize} {compiler.warning_flags} -std=gnu++11 -ffunction-sections -fdata-sections -fno-threadsafe-statics -nostdlib -fno-rtti -fno-exceptions -MMD
-compiler.ar.cmd=arm-none-eabi-ar
+compiler.ar.cmd=arm-none-eabi-gcc-ar
 compiler.ar.flags=rcs
 compiler.elf2hex.bin.flags=-O binary
 compiler.elf2hex.hex.flags=-O ihex
