@@ -153,6 +153,10 @@ static void stm32l4_dma_interrupt(stm32l4_dma_t *dma)
     }
 }
 
+stm32l4_dma_t *stm32l4_dma_get(uint8_t channel) {
+  return stm32l4_dma_driver.instances[channel & 15];
+}
+
 bool stm32l4_dma_create(stm32l4_dma_t *dma, uint8_t channel, unsigned int priority)
 {
     uint32_t o_mask, n_mask;
