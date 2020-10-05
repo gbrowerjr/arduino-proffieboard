@@ -34,3 +34,15 @@ void operator delete[](void * ptr) {
   free(ptr);
 }
 
+
+#if __cpp_sized_deallocation
+
+void operator delete(void* ptr, std::size_t) _GLIBCXX_USE_NOEXCEPT {
+  free(ptr);
+}
+
+void operator delete[](void* ptr, std::size_t) _GLIBCXX_USE_NOEXCEPT {
+  free(ptr);
+}
+
+#endif
