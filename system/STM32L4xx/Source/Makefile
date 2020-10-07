@@ -1,11 +1,12 @@
-TOOLS    = /opt/gcc-arm-none-eabi-4.8.3-2014q1
+TOOLS    = /opt/gcc-arm-none-eabi-9-2020-q2-update
+#TOOLS    = /opt/gcc-arm-none-eabi-9-2019-q4-major
 CPP      = $(TOOLS)/bin/arm-none-eabi-cpp
 CC       = $(TOOLS)/bin/arm-none-eabi-gcc
 CXX      = $(TOOLS)/bin/arm-none-eabi-g++
 AS       = $(TOOLS)/bin/arm-none-eabi-as
-AR       = $(TOOLS)/bin/arm-none-eabi-ar
+AR       = $(TOOLS)/bin/arm-none-eabi-gcc-ar
 LD       = $(TOOLS)/bin/arm-none-eabi-ld
-OPTFLAGS= -mcpu=cortex-m4 -mthumb -c -g -Os -ffunction-sections -fdata-sections -nostdlib -MMD -ffast-math
+OPTFLAGS= -mcpu=cortex-m4 -mthumb -c -g -Os -ffunction-sections -fdata-sections -nostdlib -MMD -ffast-math -flto
 CFLAGS   = $(OPTFLAGS) $(WARNINGS) -std=gnu11 $(EXTRAS) $(DEFINES) $(INCLUDES)
 CXXFLAGS = $(OPTFLAGS)mb -c -g -Os $(WARNINGS) -fno-threadsafe-statics -fno-rtti -fno-exceptions -MMD $(EXTRAS) $(DEFINES) $(INCLUDES)
 ASFLAGS  = -c -g -x assembler-with-cpp $(EXTRAS) $(DEFINES) $(INCLUDES)
@@ -84,20 +85,20 @@ LSRCS = \
 	stm32l4_usbd_hid.c
 
 BOBJS_L432 = $(patsubst %.c,_out/stm32l432/%.o,$(BSRCS))
-LSRCS_L432 = $(LSRCS) startup_stm32l432xx.S
-LOBJS_L432 = $(patsubst %.c,_out/stm32l432/%.o,$(filter-out %.S,$(LSRCS_L432))) $(patsubst %.S,_out/stm32l432/%.o,$(filter-out %.c,$(LSRCS_L432)))
+LSRCS_L432 = startup_stm32l432xx.S $(LSRCS) 
+LOBJS_L432 = $(patsubst %.S,_out/stm32l432/%.o,$(filter-out %.c,$(LSRCS_L432))) $(patsubst %.c,_out/stm32l432/%.o,$(filter-out %.S,$(LSRCS_L432)))
 
 BOBJS_L433 = $(patsubst %.c,_out/stm32l433/%.o,$(BSRCS))
-LSRCS_L433 = $(LSRCS) startup_stm32l433xx.S
-LOBJS_L433 = $(patsubst %.c,_out/stm32l433/%.o,$(filter-out %.S,$(LSRCS_L433))) $(patsubst %.S,_out/stm32l433/%.o,$(filter-out %.c,$(LSRCS_L433)))
+LSRCS_L433 = startup_stm32l433xx.S $(LSRCS) 
+LOBJS_L433 = $(patsubst %.S,_out/stm32l433/%.o,$(filter-out %.c,$(LSRCS_L433))) $(patsubst %.c,_out/stm32l433/%.o,$(filter-out %.S,$(LSRCS_L433)))
 
 BOBJS_L476 = $(patsubst %.c,_out/stm32l476/%.o,$(BSRCS))
-LSRCS_L476 = $(LSRCS) startup_stm32l476xx.S
-LOBJS_L476 = $(patsubst %.c,_out/stm32l476/%.o,$(filter-out %.S,$(LSRCS_L476))) $(patsubst %.S,_out/stm32l476/%.o,$(filter-out %.c,$(LSRCS_L476)))
+LSRCS_L476 = startup_stm32l476xx.S $(LSRCS) 
+LOBJS_L476 = $(patsubst %.S,_out/stm32l476/%.o,$(filter-out %.c,$(LSRCS_L476))) $(patsubst %.c,_out/stm32l476/%.o,$(filter-out %.S,$(LSRCS_L476)))
 
 BOBJS_L496 = $(patsubst %.c,_out/stm32l496/%.o,$(BSRCS))
-LSRCS_L496 = $(LSRCS) startup_stm32l496xx.S
-LOBJS_L496 = $(patsubst %.c,_out/stm32l496/%.o,$(filter-out %.S,$(LSRCS_L496))) $(patsubst %.S,_out/stm32l496/%.o,$(filter-out %.c,$(LSRCS_L496)))
+LSRCS_L496 = startup_stm32l496xx.S $(LSRCS) 
+LOBJS_L496 = $(patsubst %.S,_out/stm32l496/%.o,$(filter-out %.c,$(LSRCS_L496))) $(patsubst %.c,_out/stm32l496/%.o,$(filter-out %.S,$(LSRCS_L496)))
 
 all:: boot_stm32l432.o boot_stm32l433.o boot_stm32l476.o boot_stm32l496.o libstm32l432.a libstm32l433.a libstm32l476.a  libstm32l496.a
 
