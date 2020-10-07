@@ -149,9 +149,13 @@ void init( void )
     stm32l4_gpio_pin_write(PIN_SPI_SD_POWER, 0);
 #endif
 
-    extern const stm32l4_spi_pins_t g_SPIPins;
+#if defined(STM32L476xx) || defined(STM32L496xx)
     extern const stm32l4_spi_pins_t g_SPI3Pins;
-    return stm32l4_sdspi_initialize_with_pins(
+#else    
+    extern const stm32l4_spi_pins_t g_SPIPins;
+#endif    
+
+    stm32l4_sdspi_initialize_with_pins(
 #if defined(STM32L476xx) || defined(STM32L496xx)
       SPI_INSTANCE_SPI3,
       g_SPI3Pins.mosi,
