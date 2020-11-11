@@ -106,7 +106,6 @@ static void stm32l4_uart_dma_callback(stm32l4_uart_t *uart, uint32_t events)
 	if (rx_count > (uart->rx_size - uart->rx_count))
 	{
 	    rx_count = (uart->rx_size - uart->rx_count);
-
 	    overrun = true;
 	}
 
@@ -132,9 +131,7 @@ static void stm32l4_uart_dma_callback(stm32l4_uart_t *uart, uint32_t events)
 	}
 	
 	uart->rx_write = rx_write;
-	
 	armv7m_atomic_add(&uart->rx_count, rx_count);
-	
 	uart->rx_event += rx_count;
 
 	if (uart->rx_event >= 16)
@@ -216,47 +213,38 @@ static void stm32l4_uart_interrupt(stm32l4_uart_t *uart)
 		if (rx_index != rx_count)
 		{
 		    rx_count = (rx_count - rx_index) & 15;
-		    
 		    uart->rx_index = (rx_index + rx_count) & 15;
 		    
 		    if (rx_count > (uart->rx_size - uart->rx_count))
 		    {
 			rx_count = (uart->rx_size - uart->rx_count);
-			
 			events |= UART_EVENT_OVERRUN;
 		    }
 		    
 		    rx_total = rx_count;
 		    rx_write = uart->rx_write;
-		    rx_size  = rx_total;
-		    
-		    if (rx_size > (uart->rx_size - rx_write))
-		    {
+		    while (rx_total) {
+		      rx_size  = rx_total;
+
+		      if (rx_size > (uart->rx_size - rx_write))
 			rx_size = (uart->rx_size - rx_write);
-		    }
+		      if (rx_size > (16 - rx_index))
+			rx_size = 16 - rx_index;
 		    
-		    memcpy(&uart->rx_data[rx_write], &uart->rx_fifo[rx_index], rx_size);
+		      memcpy(&uart->rx_data[rx_write], &uart->rx_fifo[rx_index], rx_size);
 		    
-		    rx_write += rx_size;
-		    rx_index += rx_size;
-		    rx_total -= rx_size;
+		      rx_write += rx_size;
+		      rx_index += rx_size;
+		      rx_total -= rx_size;
 		    
-		    if (rx_write == uart->rx_size)
-		    {
+		      if (rx_write == uart->rx_size)
 			rx_write = 0;
-		    }
-		    
-		    if (rx_total)
-		    {
-			memcpy(&uart->rx_data[rx_write], &uart->rx_fifo[rx_index], rx_total);
-			
-			rx_write += rx_total;
+		      if (rx_index == sizeof(uart->rx_fifo))
+			rx_index = 0;
 		    }
 		    
 		    uart->rx_write = rx_write;
-		    
 		    armv7m_atomic_add(&uart->rx_count, rx_count);
-		    
 		    uart->rx_event += rx_count;
 		}
 	    }

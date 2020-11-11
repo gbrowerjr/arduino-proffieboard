@@ -521,6 +521,8 @@
 #define DMA_EVENT_TRANSFER_HALF               0x00000004
 #define DMA_EVENT_TRANSFER_ERROR              0x00000008
 
+#define HAVE_STM32L4_DMA_GET
+
 typedef void (*stm32l4_dma_callback_t)(void *context, uint32_t events);
 
 typedef struct _stm32l4_dma_t {
@@ -541,6 +543,7 @@ extern uint16_t stm32l4_dma_stop(stm32l4_dma_t *dma);
 extern uint16_t stm32l4_dma_count(stm32l4_dma_t *dma);
 extern bool stm32l4_dma_done(stm32l4_dma_t *dma);
 extern void stm32l4_dma_poll(stm32l4_dma_t *dma);
+extern stm32l4_dma_t* stm32l4_dma_get(uint8_t channel);
 
 extern void DMA1_Channel1_IRQHandler(void);
 extern void DMA1_Channel2_IRQHandler(void);

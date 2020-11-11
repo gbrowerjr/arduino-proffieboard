@@ -33,7 +33,7 @@
  extern "C" {
 #endif
 
-#define DOSFS_CONFIG_MAX_FILES                  8
+#define DOSFS_CONFIG_MAX_FILES                  16
 #define DOSFS_CONFIG_FAT12_SUPPORTED            1
 #define DOSFS_CONFIG_VFAT_SUPPORTED             1
 #define DOSFS_CONFIG_UTF8_SUPPORTED             0

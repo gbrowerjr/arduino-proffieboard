@@ -71,7 +71,8 @@ SECTIONS
 {
    .boot :
    {
-       KEEP(boot_stm32l433.o(.isr_vector))
+       KEEP(*(.boot_isr_vector))
+       KEEP(*(.bootcode .bootcode*))
        KEEP(boot_stm32l433.o(.text .text*))
        KEEP(boot_stm32l433.o(.rodata .rodata*))
        KEEP(*(.iap_prefix));
@@ -81,7 +82,7 @@ SECTIONS
    .text :
    {
        KEEP(*(.isr_vector));
-       . = 448;
+       . = 460;
        KEEP(*(.iap_info));
        . = 512;
 

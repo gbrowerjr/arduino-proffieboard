@@ -36,7 +36,7 @@
 static void default_irq_stm32l4xx(void);
 void reset_stm32l4xx(void);
 
-const __attribute__((section(".isr_vector"))) uint32_t vectors_stm32l4xx[16] = {
+const __attribute__((section(".boot_isr_vector"), used)) uint32_t vectors_stm32l4xx[16] = {
 #if defined(STM32L432xx) || defined(STM32L433xx)
     0x2000c000,                        /* Top of Stack */
 #endif /* defined(STM32L432xx) || defined(STM32L433xx) */
@@ -63,12 +63,12 @@ const __attribute__((section(".isr_vector"))) uint32_t vectors_stm32l4xx[16] = {
     (uint32_t)&default_irq_stm32l4xx,  /* SysTick Handler */
 };
 
-static void default_irq_stm32l4xx(void)
+__attribute__((section(".bootcode"), used, noinline)) static void default_irq_stm32l4xx(void)
 {
     while (1) { }
 }
 
-__attribute__((naked)) void reset_stm32l4xx(void)
+__attribute__((section(".bootcode"), used, noinline)) __attribute__((naked)) void reset_stm32l4xx(void)
 {
     uint32_t flash_acr;
 
@@ -212,6 +212,7 @@ __attribute__((naked)) void reset_stm32l4xx(void)
 			  "   msr     MSP, r0                        \n"
 			  "   dsb                                    \n"
 			  "   isb                                    \n"
-			  "   bx      r1                             \n");
+			  "   bx      r1                             \n"
+			  "   .ltorg\n");
     }
 }

@@ -103,15 +103,15 @@ extern const unsigned int g_PWMInstances[PWM_INSTANCE_COUNT] = {
     TIMER_INSTANCE_TIM16,
 };
 
-// Serial1Pins is the same as Neopixels 2 & 3.
+// Serial1Pins is the same as Neopixels 2 & LED 3.
 extern const stm32l4_uart_pins_t g_Serial1Pins = { GPIO_PIN_PB11_USART3_RX, GPIO_PIN_PB10_USART3_TX, GPIO_PIN_NONE, GPIO_PIN_NONE };
 extern const unsigned int g_Serial1Instance = UART_INSTANCE_USART3;
-extern const unsigned int g_Serial1Mode = UART_MODE_RX_DMA | UART_MODE_TX_DMA;
+extern const unsigned int g_Serial1Mode = 0;
 
 // Don't use, would interfere with LED Channel 2 and I2C CL
 extern const stm32l4_uart_pins_t g_Serial2Pins = { GPIO_PIN_PA10_USART1_RX, GPIO_PIN_PA9_USART1_TX, GPIO_PIN_NONE, GPIO_PIN_NONE };
 extern const unsigned int g_Serial2Instance = UART_INSTANCE_USART1;
-extern const unsigned int g_Serial2Mode = UART_MODE_RX_DMA | UART_MODE_TX_DMA;
+extern const unsigned int g_Serial2Mode = 0;
 
 // RX/TX, please use this one.
 extern const stm32l4_uart_pins_t g_Serial3Pins = { GPIO_PIN_PA15_USART2_RX, GPIO_PIN_PA2_USART2_TX, GPIO_PIN_NONE, GPIO_PIN_NONE };
